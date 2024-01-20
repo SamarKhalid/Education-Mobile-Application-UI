@@ -1,8 +1,11 @@
 import 'package:education_mobile_application/constants.dart';
+import 'package:education_mobile_application/screens/auth_screens/sign_in.dart';
 import 'package:flutter/material.dart';
 
 class OnBoarding2 extends StatefulWidget {
   const OnBoarding2({Key? key}) : super(key: key);
+  static const String id = 'onboarding2';
+
 
   @override
   State<OnBoarding2> createState() => _OnBoarding2State();
@@ -33,16 +36,16 @@ class _OnBoarding2State extends State<OnBoarding2> {
                           end: Alignment.topCenter,
                         ),
                       ),
-                      width: screenWidth * 1.2,
-                      height: screenHeight * 0.9,
+                      width: screenWidth,
+                      height: screenHeight *0.96 ,
                       child: Align(
                         alignment: Alignment.topCenter,
                         child: Transform.scale(
-                          scale: 0.57, // Adjust the scale factor as needed
+                          scale: 0.8, // Adjust the scale factor as needed
                           child: Transform.rotate(
-                            angle: -2 * 3.14 / 2, // Counter-rotate the image
+                            angle: -2 * 3.14 / 2,
                             child: Image.asset(
-                              'images/onboarding2.png', // Replace with your image path
+                              'images/onboarding2_img.png',
                             ),
                           ),
                         ),
@@ -53,7 +56,7 @@ class _OnBoarding2State extends State<OnBoarding2> {
               ),
             ),
             SizedBox(height: screenHeight * 0.02),
-            Text('Get Certified',style: mainText),
+            const Text('Get Certified',style: mainText),
             SizedBox(height: screenHeight * 0.01),
             Center(
               child: Text(
@@ -65,10 +68,9 @@ class _OnBoarding2State extends State<OnBoarding2> {
             SizedBox(height: screenHeight * 0.07),
             ElevatedButton(
               style: filledButtonStyle,
-              onPressed: () {  },
+              onPressed: () { Navigator.pushNamed(context, SignIn.id); },
               child: const Text('Lets make a journey'),
             ),
-
           ],
         ),
       ),

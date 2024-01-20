@@ -5,18 +5,17 @@ class AppColors{
 }
 
 const mainText= TextStyle(
-  fontSize: 25,
+  fontSize: 22,
   fontWeight: FontWeight.w600,
   height: 1.5,
   color: Colors.black, // Color code for #3D8361
 );
 var filledButtonStyle = ButtonStyle(
-  backgroundColor:
-  MaterialStateProperty.all<Color>(const Color(0xFF1C6758)),
-  minimumSize: MaterialStateProperty.all<Size>(const Size(320, 53)),
+  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF1C6758)),
+  minimumSize: MaterialStateProperty.all<Size>(const Size(345, 46)),
   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
     RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(15.0),
+      borderRadius: BorderRadius.circular(12.0),
       side: const BorderSide(color: Color(0xFF1C6758)),
     ),
   ),
@@ -27,10 +26,10 @@ var filledButtonStyle = ButtonStyle(
 
 var outlinedButtonStyle = ButtonStyle(
   backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFFFFFFF)),
-  minimumSize: MaterialStateProperty.all<Size>(const Size(320, 53)),
+  minimumSize: MaterialStateProperty.all<Size>(const Size(345, 46)),
   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
     RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(15.0),
+      borderRadius: BorderRadius.circular(12.0),
       side: const BorderSide(color: Color(0xFF1C6758)),
     ),
   ),
@@ -38,6 +37,6 @@ var outlinedButtonStyle = ButtonStyle(
 
 const buttonTextStyle = TextStyle(
     color: Colors.white,
-    fontSize: 20.0,
+    fontSize: 18.0,
     fontWeight: FontWeight.normal);
-const loremText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+const loremText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.";
