@@ -15,14 +15,8 @@ class OnBoarding1 extends StatefulWidget {
 class _OnBoarding1State extends State<OnBoarding1> {
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery
-        .of(context)
-        .size
-        .height;
-    double screenWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       body: Center(
