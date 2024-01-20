@@ -1,4 +1,5 @@
 import 'package:education_mobile_application/constants.dart';
+import 'package:education_mobile_application/screens/auth_screens/sign_up.dart';
 import 'package:flutter/material.dart';
 
 class SignIn extends StatefulWidget {
@@ -81,7 +82,7 @@ class _SignInState extends State<SignIn> {
                 ElevatedButton(
                   style: filledButtonStyle.copyWith(minimumSize: MaterialStateProperty.all<Size>(const Size(385, 60)),),
                   onPressed: ()  {
-                    //Navigator.pushNamed(context, OnBoarding2.id);
+                   // Navigator.pushNamed(context, SignUp.id);
                   },
                   child: const Text('Login'),
                 ),
@@ -90,7 +91,7 @@ class _SignInState extends State<SignIn> {
                   children: [
                     const Text('Dont have an account?'),
                     TextButton(
-                        onPressed: () {  }, child: const Text('Sign Up')),
+                        onPressed: () {  Navigator.pushNamed(context, SignUp.id);}, child: const Text('Sign Up')),
                   ],
                 ),
               ],
