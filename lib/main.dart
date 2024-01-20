@@ -1,13 +1,17 @@
+import 'package:education_mobile_application/firebase_options.dart';
 import 'package:education_mobile_application/screens/auth_screens/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/auth_screens/sign_in.dart';
 import 'screens/onboarding_screens/onboarding1.dart';
 import 'screens/onboarding_screens/onboarding2.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await _initializePreferences();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,);
   runApp(const MyApp());
 }
 

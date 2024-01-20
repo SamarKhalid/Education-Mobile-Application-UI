@@ -1,5 +1,6 @@
 import 'package:education_mobile_application/constants.dart';
 import 'package:education_mobile_application/screens/auth_screens/sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatefulWidget {
@@ -11,8 +12,60 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  String email = '';
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
   String name = '';
+  String confirmPassword = '';
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Future<void> registerUser() async {
+    if (passwordController.text != confirmPassword) {
+      setState(() {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Password not match.'),
+            duration: Duration(seconds: 7),
+          ),
+        );
+      });
+      return;
+    }
+
+    try {
+      UserCredential? userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'email-already-in-use') {
+        setState(() {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('This email is already in use.'),
+              duration: Duration(seconds: 7),
+            ),
+          );
+        });
+      } else if (e.code == 'weak-password') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Password should be at least 6 characters.'),
+            duration: Duration(seconds: 7),
+          ),
+        );
+      } else {
+        // Handle other FirebaseAuthException errors
+        print('FirebaseAuthException: ${e.code}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,9 +109,7 @@ class _SignUpState extends State<SignUp> {
                   ],
                 ),
                 TextField(
-                  onChanged: (value) {
-                    email = value;
-                  },
+                  controller: emailController,
                   decoration: textFieldDecoration.copyWith(
                     hintText: 'example@domain.com',
                     prefixIcon: const Icon(Icons.email_outlined),
@@ -76,6 +127,7 @@ class _SignUpState extends State<SignUp> {
                 ),
                 TextField(
                   obscureText: true,
+                  controller: passwordController,
                   decoration: textFieldDecoration.copyWith(
                     hintText: 'Your password',
                     prefixIcon: const Icon(Icons.password),
@@ -92,6 +144,9 @@ class _SignUpState extends State<SignUp> {
                   ],
                 ),
                 TextField(
+                  onChanged: (value) {
+                    confirmPassword = value;
+                  },
                   obscureText: true,
                   decoration: textFieldDecoration.copyWith(
                     hintText: 'Re-type the password',
@@ -100,8 +155,12 @@ class _SignUpState extends State<SignUp> {
                 ),
                 SizedBox(height: screenHeight * 0.05),
                 ElevatedButton(
-                  style: filledButtonStyle.copyWith(minimumSize: MaterialStateProperty.all<Size>(const Size(385, 60)),),
-                  onPressed: ()  {
+                  style: filledButtonStyle.copyWith(
+                    minimumSize:
+                        MaterialStateProperty.all<Size>(const Size(385, 60)),
+                  ),
+                  onPressed: () async {
+                    await registerUser();
                     //Navigator.pushNamed(context, OnBoarding2.id);
                   },
                   child: const Text('Sign Up'),
@@ -111,7 +170,10 @@ class _SignUpState extends State<SignUp> {
                   children: [
                     const Text('Already have an account?'),
                     TextButton(
-                        onPressed: () { Navigator.pushNamed(context, SignIn.id); }, child: const Text('Sign In')),
+                        onPressed: () {
+                          Navigator.pushNamed(context, SignIn.id);
+                        },
+                        child: const Text('Sign In')),
                   ],
                 ),
               ],
