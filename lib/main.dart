@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
           bool showOnboarding = snapshot.data ?? true;
 
           return MaterialApp(
-            initialRoute: showOnboarding ? OnBoarding1.id : HomePage.id,
+            initialRoute: showOnboarding ? OnBoarding1.id : SignIn.id,
             routes: {
               OnBoarding1.id: (context) => const OnBoarding1(),
               OnBoarding2.id: (context) => const OnBoarding2(),
