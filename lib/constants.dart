@@ -39,4 +39,26 @@ const buttonTextStyle = TextStyle(
     color: Colors.white,
     fontSize: 18.0,
     fontWeight: FontWeight.normal);
+
+const textFieldDecoration = InputDecoration(
+  hintText: 'Enter a value',
+  hintStyle: TextStyle(
+    color: Color(0xffD7D8DB),
+  ),
+  contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+  enabledBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: Color(0xFF1C6758), width: 1.0),
+    borderRadius: BorderRadius.all(Radius.circular(12.0)),
+  ),
+  focusedBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: Color(0xFF1C6758), width: 1.0),
+    borderRadius: BorderRadius.all(Radius.circular(12.0)),
+  ),
+  prefixIcon: Icon(
+    Icons.person, // Change to the desired icon
+    color: Color(0xFFBDBDBD), // Change to the desired color
+  ),
+);
+
+
 const loremText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.";

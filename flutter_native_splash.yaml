@@ -1,0 +1,6 @@
+flutter_native_splash:
+  background_image: images/splash.png
+  android: true
+  ios: true
+  image_size: "cover"
+  image_position: "center"
