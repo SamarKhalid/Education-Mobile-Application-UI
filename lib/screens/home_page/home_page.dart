@@ -1,3 +1,4 @@
+import 'package:education_mobile_application/components/course_card.dart';
 import 'package:education_mobile_application/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +11,25 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int selectedTabIndex = 0; // To track the selected tab
+  int selectedTabIndex = 0;
+
+  List<Map<String, dynamic>> getFilteredCourses() {
+    if (selectedTabIndex == 0) {
+      return List.from(coursesData);
+    } else {
+      String selectedCategory = courseCategories[selectedTabIndex];
+      print('Selected Tab Index: $selectedTabIndex');
+      print('Selected Category: $selectedCategory');
+
+      List<Map<String, dynamic>> filteredCourses = coursesData
+          .where((course) => course['courseCategory'] == selectedCategory)
+          .toList();
+
+      print('Filtered Courses: $filteredCourses');
+      return filteredCourses;
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +51,7 @@ class _HomePageState extends State<HomePage> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
                         flex: 2,
@@ -153,26 +173,36 @@ class _HomePageState extends State<HomePage> {
                 children: List.generate(courseCategories.length, (index) {
                   return GestureDetector(
                     onTap: () {
-                      // Update the selectedTabIndex to trigger a rebuild
                       setState(() {
                         selectedTabIndex = index;
                       });
-                      // You can add logic here to load courses for the selected tab
                     },
                     child: Text(
                       courseCategories[index],
                       style: mainText.copyWith(
                         color: index == selectedTabIndex
-                            ? Color(0xFF1C6758) // Set the text color for the selected tab
+                            ? Color(0xFF1C6758)
                             : Colors.grey,
                         fontSize: 16,
-                        fontWeight: FontWeight.normal// Set the text color for unselected tabs
+                        fontWeight: FontWeight.normal
                       ),
                     ),
                   );
                 }),
               ),
-              // Add your courses widget based on the selectedTabIndex here
+              Expanded(
+                child: ListView.builder(
+                  itemCount: getFilteredCourses().length,
+                  itemBuilder: (context, index) {
+                    return CourseCard(
+                      imagePath: getFilteredCourses()[index]['imagePath'],
+                      courseName: getFilteredCourses()[index]['courseName'],
+                      rating: getFilteredCourses()[index]['rating'],
+                      duration: getFilteredCourses()[index]['duration'],
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),
