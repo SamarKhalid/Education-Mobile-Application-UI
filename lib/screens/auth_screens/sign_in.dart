@@ -1,5 +1,8 @@
 import 'package:education_mobile_application/constants.dart';
 import 'package:education_mobile_application/screens/auth_screens/sign_up.dart';
+import 'package:education_mobile_application/screens/home_page/home_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class SignIn extends StatefulWidget {
@@ -11,7 +14,43 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
   String email = '';
+
+  Future<void> signIn() async {
+    try {
+      UserCredential? userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+      // Check if the user is signed in after successful sign-in
+      if (FirebaseAuth.instance.currentUser != null) {
+        // User is signed in, you can navigate to another screen or perform other actions
+        print("User is signed in");
+      }
+    } on FirebaseAuthException catch (e) {
+      // Handle sign-in exceptions
+      if (e.code == 'user-not-found') {
+        setState(() {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('No user found for that email.'),
+              duration: Duration(seconds: 7),
+            ),
+          );
+        });
+      } else if (e.code == 'wrong-password') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Wrong password provided for that user.'),
+            duration: Duration(seconds: 7),
+          ),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +85,7 @@ class _SignInState extends State<SignIn> {
                   ],
                 ),
                 TextField(
-                  onChanged: (value) {
-                    email = value;
-                  },
+                  controller: emailController,
                   decoration: textFieldDecoration.copyWith(
                     hintText: 'example@domain.com',
                     prefixIcon: const Icon(Icons.email_outlined),
@@ -66,6 +103,7 @@ class _SignInState extends State<SignIn> {
                 ),
                 TextField(
                   obscureText: true,
+                  controller: passwordController,
                   decoration: textFieldDecoration.copyWith(
                     hintText: 'Your password',
                     prefixIcon: const Icon(Icons.password),
@@ -75,14 +113,25 @@ class _SignInState extends State<SignIn> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
-                         onPressed: () {  }, child: const Text('Forget password?')),
+                        onPressed: () {},
+                        child: const Text('Forget password?')),
                   ],
                 ),
                 SizedBox(height: screenHeight * 0.03),
                 ElevatedButton(
-                  style: filledButtonStyle.copyWith(minimumSize: MaterialStateProperty.all<Size>(const Size(385, 60)),),
-                  onPressed: ()  {
-                   // Navigator.pushNamed(context, SignUp.id);
+                  style: filledButtonStyle.copyWith(
+                    minimumSize:
+                        MaterialStateProperty.all<Size>(const Size(385, 60)),
+                  ),
+                  onPressed: () async {
+                    try {
+                      await signIn();
+                      Navigator.pushNamed(context, HomePage.id);
+                    } catch (e) {
+                      if (kDebugMode) {
+                        print(e.toString());
+                      }
+                    }
                   },
                   child: const Text('Login'),
                 ),
@@ -91,7 +140,10 @@ class _SignInState extends State<SignIn> {
                   children: [
                     const Text('Dont have an account?'),
                     TextButton(
-                        onPressed: () {  Navigator.pushNamed(context, SignUp.id);}, child: const Text('Sign Up')),
+                        onPressed: () {
+                          Navigator.pushNamed(context, SignUp.id);
+                        },
+                        child: const Text('Sign Up')),
                   ],
                 ),
               ],

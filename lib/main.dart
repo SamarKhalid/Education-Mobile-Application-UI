@@ -1,5 +1,6 @@
 import 'package:education_mobile_application/firebase_options.dart';
 import 'package:education_mobile_application/screens/auth_screens/sign_up.dart';
+import 'package:education_mobile_application/screens/home_page/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/auth_screens/sign_in.dart';
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
               OnBoarding2.id: (context) => const OnBoarding2(),
               SignIn.id: (context) => const SignIn(),
               SignUp.id: (context) => const SignUp(),
+              HomePage.id: (context) => const HomePage(),
             },
           );
         } else {

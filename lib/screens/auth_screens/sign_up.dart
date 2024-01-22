@@ -161,7 +161,7 @@ class _SignUpState extends State<SignUp> {
                   ),
                   onPressed: () async {
                     await registerUser();
-                    //Navigator.pushNamed(context, OnBoarding2.id);
+                    Navigator.pushNamed(context, SignIn.id);
                   },
                   child: const Text('Sign Up'),
                 ),
